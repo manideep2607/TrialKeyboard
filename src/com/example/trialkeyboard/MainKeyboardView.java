@@ -13,6 +13,9 @@ import android.widget.PopupWindow;
 public class MainKeyboardView extends KeyboardView {
 	private PopupWindow mPreviewPopup;
 	private View mPopupParent;
+	private SoftKeyboard mSoftKeyboard;
+	boolean swiped;
+//	private SwaraChakra mSwaraChakra;
 	
 	public MainKeyboardView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -32,7 +35,7 @@ public class MainKeyboardView extends KeyboardView {
 		super.setPreviewEnabled(false);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View v = inflater.inflate(R.layout.preview_layout, null);
-		
+//		mSwaraChakra = (SwaraChakra)v;
 		mPreviewPopup = new PopupWindow(context);
 		mPreviewPopup.setContentView(v);
 		mPreviewPopup.setTouchable(false);
@@ -41,12 +44,15 @@ public class MainKeyboardView extends KeyboardView {
 		mPreviewPopup.setHeight((int) getResources().getDimension(R.dimen.popupheight));
 		mPreviewPopup.setBackgroundDrawable(null);
 		mPopupParent = this;
+		swiped = false;
 	}
 
 	public void showPreviewAt(int posX, int posY) {
 		// TODO Auto-generated method stub
 		final PopupWindow previewPopup = mPreviewPopup;
-		previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, posX, posY);
+//		mSwaraChakra.setCenter(posX,posY);
+		int radius = (int) getResources().getDimension(R.dimen.outer_radius);
+		previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, posX - radius, posY - radius);
 	}
 	
 	public void dismissPreview(){
@@ -60,12 +66,26 @@ public class MainKeyboardView extends KeyboardView {
 		if(action == MotionEvent.ACTION_DOWN){
 			int x = (int) me.getX();
 			int y = (int) me.getY();
+			this.setClickable(false);
 			showPreviewAt(x,y);
 		}
-		else if(action == MotionEvent.ACTION_UP){
+		else if(action == MotionEvent.ACTION_UP || (action == MotionEvent.ACTION_OUTSIDE)){
 			dismissPreview();
+			if(swiped){
+				mSoftKeyboard.setHalant((char)'A');
+				swiped = false;
+			}
+		}
+		else if(action == MotionEvent.ACTION_MOVE){
+			swiped = true;
 		}
 		
 		return super.onTouchEvent(me);
+	}
+	
+	
+
+	public void setListener(SoftKeyboard listener){
+		mSoftKeyboard = listener;
 	}
 }

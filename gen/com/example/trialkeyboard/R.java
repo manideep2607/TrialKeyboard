@@ -25,6 +25,7 @@ containing a value of this type.
         public static final int preview_text_color=0x7f050001;
     }
     public static final class dimen {
+        public static final int outer_radius=0x7f060001;
         public static final int popupheight=0x7f060000;
     }
     public static final class drawable {

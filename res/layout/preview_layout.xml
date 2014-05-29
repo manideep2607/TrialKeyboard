@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.trialkeyboard.SwaraChakra xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+<com.example.trialkeyboard.SwaraChakra 
     xmlns:custom="http://schemas.android.com/apk/res/com.example.trialkeyboard"
-    custom:outerRadius="20dp"
-    android:layout_gravity="center" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    custom:outerRadius="50dp" />
+</LinearLayout>

@@ -1,9 +1,13 @@
 package com.example.trialkeyboard;
 
 
+import java.util.List;
+
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
+import android.inputmethodservice.Keyboard.Key;
 import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -20,9 +24,20 @@ public class SoftKeyboard extends InputMethodService implements
 		mKeyboardView = (MainKeyboardView) layout.findViewById(R.id.keyboard);
 		mKeyboardView.setKeyboard(mKeyboard);
 		mKeyboardView.setOnKeyboardActionListener(this);
+		mKeyboardView.setListener(this);
 		return layout;
 		}
 	
+	public void setHalant(char c){
+		List<Key> keys = mKeyboard.getKeys();
+		for (Key key:keys){
+			String s = new StringBuilder().append(key.label).append(c).toString();
+			key.label = (CharSequence) s;
+			mKeyboardView.invalidateAllKeys();
+			Log.d("key changed", "true");
+		}
+		Log.d("function run", "true");
+	}
 
 	@Override
 	public void onKey(int arg0, int[] arg1) {
